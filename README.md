@@ -12,15 +12,15 @@ Ideal for makers, developers, and hobbyists who want to explore the power of ESP
 - BLE connection from Android/iOS app
 - Arrow buttons (↑ ↓ ← →) and OK (Enter) for navigation
 - Backspace and custom command support
-- Flutter-based app interface
+- app interface 
 - USB HID functionality using TinyUSB
 - Optional 3D printable enclosure design (coming soon)
 
-## How to Upload to ESP32-S3
+## How to Upload to ESP32-S3 Super Mini
 
 1. Use the Arduino IDE
 2. Install the ESP32 board definitions
-3. Select **ESP32-S3 Dev Module** as the board
+3. Select **ESP32-S3 Super Mini** as the board
 4. Open `BlueTextTV.ino` and upload
 
 ## Smartphone App

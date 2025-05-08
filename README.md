@@ -4,12 +4,12 @@ BlueTextTV is an open-source project that turns an ESP32-S3 into a BLE receiver 
 It allows users to send text and directional commands (↑ ↓ ← →) from a smartphone to a TV, laptop, or other devices using BLE and USB.
 
 This project is designed for smart control and remote interaction with minimal setup. 
-Ideal for makers, developers, and hobbyists who want to explore the power of ESP32-S3 and Flutter BLE integration.
+Ideal for makers, developers, and hobbyists who want to explore the power of ESP32-S3 and SmartPhone BLE integration.
 
 ## Features
 
 - Send text from a smartphone to any USB host device
-- BLE connection from Android/iOS app
+- BLE connection from Android/iOS app (Coming soon)
 - Arrow buttons (↑ ↓ ← →) and OK (Enter) for navigation
 - Backspace and custom command support
 - app interface 
@@ -27,7 +27,7 @@ Ideal for makers, developers, and hobbyists who want to explore the power of ESP
 
 Download the companion app from:
 
-- [Google Play Store](#) *(Coming soon)*
+- [Google Play Store](#) 
 - [Apple App Store](#) *(Coming soon)*
 
 ## 3D Printable Enclosure

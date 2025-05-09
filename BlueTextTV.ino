@@ -32,7 +32,7 @@ class MyCallbacks : public BLECharacteristicCallbacks {
       Keyboard.write(KEY_BACKSPACE);
     }
     else if (rx == "\n") {
-      Keyboard.write(KEY_RETURN);  // or use KEY_ENTER
+      Keyboard.write(KEY_RETURN);  
     }
     else if (rx == "[UP]") {
       Keyboard.write(KEY_UP_ARROW);
@@ -63,7 +63,7 @@ void setup() {
   delay(500);
 
   Keyboard.begin();
-  delay(3000);  // wait for USB HID to be ready
+  delay(3000);  
 
   BLEDevice::init("BlueTextTV");
   BLEServer* pServer = BLEDevice::createServer();

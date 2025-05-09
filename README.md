@@ -9,7 +9,7 @@ Ideal for makers, developers, and hobbyists who want to explore the power of ESP
 ## Features
 
 - Send text from a smartphone to any USB host device
-- BLE connection from Android/iOS app (Coming soon)
+- BLE connection from Android app (Coming soon)
 - Arrow buttons (↑ ↓ ← →) and OK (Enter) for navigation
 - Backspace and custom command support
 - app interface 

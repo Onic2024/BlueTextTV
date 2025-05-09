@@ -19,7 +19,7 @@ Ideal for makers, developers, and hobbyists who want to explore the power of ESP
 ## How to Upload to ESP32-S3 Super Mini
 
 1. Use the Arduino IDE
-2. Install the ESP32 board definitions
+2. Install the ESP32 Super Mini board definitions
 3. Select **ESP32-S3 Super Mini** as the board
 4. Open `BlueTextTV.ino` and upload
 

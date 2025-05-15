@@ -1,6 +1,6 @@
 # BlueTyping...
 
-BlueTextTV is an open-source project that turns an ESP32-S3 Super Mini into a BLE receiver and USB HID keyboard. 
+BlueTyping is an open-source project that turns an ESP32-S3 Super Mini into a BLE receiver and USB HID keyboard. 
 It allows users to send text and directional commands (↑ ↓ ← →) from a smartphone to a TV, laptop, or other devices using BLE and USB.
 
 This project is designed for smart control and remote interaction with minimal setup. 

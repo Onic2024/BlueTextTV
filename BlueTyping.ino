@@ -51,13 +51,13 @@ class MyCallbacks : public BLECharacteristicCallbacks {
     else if (rx == "[ESC][WIN]") {
       Keyboard.press(KEY_LEFT_GUI);  // Tombol Windows (GUI)
       Keyboard.press(KEY_ESC);       // Tombol ESC
-      delay(100);                    // Delay kecil untuk memastikan terkirim
-      Keyboard.releaseAll();         // Lepaskan semua tombol
+      delay(100);                    
+      Keyboard.releaseAll();         
     }
     else if (rx.startsWith("[MOUSE_MOVE:")) {
       int x = 0, y = 0;
       sscanf(rx.c_str(), "[MOUSE_MOVE:%d,%d]", &x, &y);
-      Mouse.move(x, y, 0);  // Tambah scroll = 0 (parameter ketiga wajib)
+      Mouse.move(x, y, 0);  
     }
     else if (rx == "[MOUSE_CLICK]") {
       Mouse.click(MOUSE_LEFT);

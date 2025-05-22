@@ -54,6 +54,7 @@ class MyCallbacks : public BLECharacteristicCallbacks {
 
     if (rx == "[BS]") {
       Keyboard.write(KEY_BACKSPACE);
+      delay(50);
     }
     else if (rx == "\n") {
       Keyboard.write(KEY_RETURN);
@@ -86,11 +87,6 @@ class MyCallbacks : public BLECharacteristicCallbacks {
     }
     else if (rx == "[MOUSE_RIGHT]") {
       Mouse.click(MOUSE_RIGHT);
-    }
-    else if (rx.startsWith("[MOUSE_SCROLL:")) {
-      int scrollY = 0;
-      sscanf(rx.c_str(), "[MOUSE_SCROLL:%d]", &scrollY);
-      Mouse.move(0, scrollY);
     }
     else {
       Keyboard.print(rx);

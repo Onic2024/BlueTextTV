@@ -71,8 +71,7 @@ class MyCallbacks : public BLECharacteristicCallbacks {
     else if (rx == "[RIGHT]") {
       Keyboard.write(KEY_RIGHT_ARROW);
     }
-    else if (rx == "[ESC][WIN]") {
-      Keyboard.press(KEY_LEFT_GUI);  // Tombol Windows (GUI)
+    else if (rx == "[ESC]") {
       Keyboard.press(KEY_ESC);       // Tombol ESC
       delay(100);                    
       Keyboard.releaseAll();         

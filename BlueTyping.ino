@@ -27,13 +27,21 @@ DEALINGS IN THE SOFTWARE. */
 #include "USB.h"
 #include "USBHIDKeyboard.h"
 #include "USBHIDMouse.h"
+#include "USBHIDConsumerControl.h"
 
 #define SERVICE_UUID        "12345678-1234-5678-1234-56789abcdef0"
 #define CHARACTERISTIC_UUID "abcdef12-3456-7890-abcd-ef1234567890"
 
 USBHIDMouse Mouse;
 USBHIDKeyboard Keyboard;
+USBHIDConsumerControl Consumer;
 BLECharacteristic* pCharacteristic;
+
+// === Variabel smoothing dan timing ===
+int lastX = 0, lastY = 0;
+unsigned long lastMouseMoveTime = 0;
+const int mouseUpdateInterval = 10; // minimal delay antar gerakan (ms)
+const int sensitivity = 2; // skala gerakan
 
 // === BLE Disconnect Callback ===
 class MyServerCallbacks : public BLEServerCallbacks {
@@ -54,7 +62,6 @@ class MyCallbacks : public BLECharacteristicCallbacks {
 
     if (rx == "[BS]") {
       Keyboard.write(KEY_BACKSPACE);
-      delay(50);
     }
     else if (rx == "\n") {
       Keyboard.write(KEY_RETURN);
@@ -72,20 +79,54 @@ class MyCallbacks : public BLECharacteristicCallbacks {
       Keyboard.write(KEY_RIGHT_ARROW);
     }
     else if (rx == "[ESC]") {
-      Keyboard.press(KEY_ESC);       // Tombol ESC
-      delay(100);                    
-      Keyboard.releaseAll();         
+      Keyboard.write(KEY_ESC);     
     }
-    else if (rx.startsWith("[MOUSE_MOVE:")) {
-      int x = 0, y = 0;
-      sscanf(rx.c_str(), "[MOUSE_MOVE:%d,%d]", &x, &y);
-      Mouse.move(x, y, 0);  
-    }
+    else if (rx == "[VOL_UP]") {
+  Consumer.press(HID_USAGE_CONSUMER_VOLUME_INCREMENT);
+  delay(100);
+  Consumer.release();
+}
+else if (rx == "[VOL_DOWN]") {
+  Consumer.press(HID_USAGE_CONSUMER_VOLUME_DECREMENT);
+  delay(100);
+  Consumer.release();
+}
+else if (rx == "[VOL_MUTE]") {
+  Consumer.press(HID_USAGE_CONSUMER_MUTE);
+  delay(100);
+  Consumer.release();
+}
+else if (rx.startsWith("[MOUSE_MOVE:")) {
+  int x = 0, y = 0;
+  sscanf(rx.c_str(), "[MOUSE_MOVE:%d,%d]", &x, &y);
+  x *= sensitivity;
+  y *= sensitivity;
+
+  int smoothX = (lastX * 3 + x) / 4;
+  int smoothY = (lastY * 3 + y) / 4;
+
+  // Batasin agar tidak overflow
+  smoothX = constrain(smoothX, -127, 127);
+  smoothY = constrain(smoothY, -127, 127);
+
+  unsigned long now = millis();
+  if ((smoothX != 0 || smoothY != 0) && now - lastMouseMoveTime >= mouseUpdateInterval) {
+    Mouse.move(smoothX, smoothY, 0);
+    lastMouseMoveTime = now;
+    lastX = smoothX;
+    lastY = smoothY;
+  }
+}
     else if (rx == "[MOUSE_CLICK]") {
       Mouse.click(MOUSE_LEFT);
     }
     else if (rx == "[MOUSE_RIGHT]") {
       Mouse.click(MOUSE_RIGHT);
+    }
+    else if (rx.startsWith("[MOUSE_SCROLL:")) {
+      int scrollY = 0;
+      sscanf(rx.c_str(), "[MOUSE_SCROLL:%d]", &scrollY);
+      Mouse.move(0, scrollY, 0);
     }
     else {
       Keyboard.print(rx);
@@ -99,6 +140,7 @@ void setup() {
   
   Mouse.begin();
   Keyboard.begin();
+  Consumer.begin();
   delay(3000);  
 
   BLEDevice::init("BlueTyping");
